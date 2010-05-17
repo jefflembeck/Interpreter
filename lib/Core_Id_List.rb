@@ -1,6 +1,10 @@
 class Core_Id_List
   
-  id = Core_id.new
+  def initialize
+      id = Core_id.new
+  end
+  
+
   
   def parse_id_list
     id.parse_id  

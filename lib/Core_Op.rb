@@ -1,4 +1,6 @@
 class Core_Op
+  def initialize
+  end
   def parse_op
     t = @tokenizer.current_token
     if t.integer?

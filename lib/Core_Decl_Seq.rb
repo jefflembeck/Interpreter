@@ -2,6 +2,10 @@ require 'Tokenizer.rb'
 
 class Core_Decl_Seq
   
+  def initialize
+  end
+  
+  
   decl = Core_Decl.new
   
   def parse_decl_seq

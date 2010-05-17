@@ -1,4 +1,11 @@
+require 'Core_Comp.rb'
+
+
 class Core_Cond
+  
+  def initialize
+  end
+  
   def parse_cond
     case @tokenizer.current_token
     when '('

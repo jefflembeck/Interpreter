@@ -1,4 +1,6 @@
 class Core_Loop
+  def initialize
+  end
   def parse_loop
     @tokenizer.get_next_token
     c = Core_Cond.new

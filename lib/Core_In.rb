@@ -1,4 +1,6 @@
 class Core_In
+  def initialize
+  end
   def parse_in
     @tokenizer.get_next_token
     idl = Core_Id_List.new

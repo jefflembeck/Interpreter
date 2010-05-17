@@ -4,8 +4,11 @@ require 'lib/tokenizer'
 
 
 class Core_Prog
-  ds = Core_Decl_Seq.new
-  ss = Core_Stmt_Seq.new
+  def initialize
+    ds = Core_Decl_Seq.new
+    ss = Core_Stmt_Seq.new
+  end
+
   
   def parse_core_prog
     @tokenizer.get_next_token

@@ -1,4 +1,7 @@
 class Core_If
+  
+  def initialize
+  end
   def parse_if
     @tokenizer.get_next_token
     c = Core_Cond.new

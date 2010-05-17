@@ -1,4 +1,8 @@
 class Core_Assign
+  
+  def initialize
+  end
+  
   def parse_assign
     i = Core_Id.new
     i.parse_id

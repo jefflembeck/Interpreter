@@ -1,4 +1,8 @@
 class Core_Fac
+  
+  def initialize
+  end
+  
   def parse_fac
     op = Core_Op.new
     op.parse_op

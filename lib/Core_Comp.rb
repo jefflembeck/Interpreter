@@ -1,4 +1,8 @@
 class Core_Comp
+  
+  def initialize
+  end
+  
   def parse_comp
     @tokenizer.get_next_token
     op = Core_Op.new

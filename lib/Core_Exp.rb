@@ -1,4 +1,8 @@
 class Core_Exp
+  
+  def initialize
+  end
+  
   def parse_exp
     f = Core_Fac.new
     f.parse_fac

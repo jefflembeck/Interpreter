@@ -1,5 +1,6 @@
 class Core_Stmt
-  
+  def initialize
+  end
   def parse_stmt
     case @tokenizer.current_token
     when "assign"

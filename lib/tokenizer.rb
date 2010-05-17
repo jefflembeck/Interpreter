@@ -1,62 +1,49 @@
-require 'lib/Token'
-require 'lib/Extend_String'
-require 'singleton'
+require 'lib/Extend_String.rb'
 
-# For explanation on methods and class variables, please see the README
 class Tokenizer
-include Singleton
-  #constructor
-  def initialize
-    @tokens = []
+  
+  attr_accessor :source, :chunks, :current_token
+  
+
+             
+  def initialize(filename = '')
+    @source = IO.readlines(filename, '') unless filename.empty?
+    @chunks = self.source.to_s.split(' ') unless filename.empty?
   end
 
-  #Accessor
-  def tokens
-    @tokens
-  end
-
-  def tokenize filename
-    file = open(filename, "r")        
-    until file.eof
-      token = getNextToken(file)
-      # If the first character is a symbol
-      if token[0,1].symbol?
-        symbols = Token.symbolsplit(token)
-        symbols.each do |s|
-          unless s.empty?
-            self.tokens << Token.new(s)
-          end
-        end
-      elsif !token.whitespace? && !token.empty?
-        self.tokens << Token.new(token)
-      end 
+  def get_next_token
+    if valid_token?(self.chunks.first)
+      self.chunks.shift
+    elsif self.chunks.first =~ /end/
+      self.chunks.first.slice!(0..2)
+    else
+      get_token_from_chunk
     end
-    file.close
+  end
+  
+  def get_token_from_chunk
+    tokens = split_em(self.chunks.shift).reverse.each do |token|
+      self.chunks.unshift(token) 
+    end
+    self.chunks.shift
+  end
+  
+  def valid_token?(chunk)
+    chunk.whitespace? || chunk.integer? || chunk.identifier? || chunk.symbol? || chunk.keyword?
+  end
+  
+  def split_em(chunk)
+    count = 0
+    foo = chunk.split(//).inject([""]) do |arr,e|
+      if self.valid_token?(arr[count] + e)
+        arr[count] = arr[count] + e
+        arr
+      else
+        count+=1
+        arr << e
+      end
+    end
   end
 
-
-  def getNextToken file
-    token = ""
-    ch = file.getc.chr unless file.eof?
-    #eat whitespace
-    while ch.whitespace?
-      ch = file.getc.chr
-    end
-    lookahead = file.getc.chr unless file.eof?
-    if lookahead == nil
-      return token << ch
-    end
-    while tokenIncomplete?(lookahead, ch) && !file.eof?
-      token << ch
-      ch = lookahead
-      lookahead = file.getc.chr
-    end
-    file.ungetc(lookahead[0]) unless file.eof?
-    file.eof? ? token << ch << lookahead : token << ch  #inline conditional, if file is at end, return token
-    #with ch and lookahead appended on it, otherwise, append token with ch and return
-  end
-
-  def tokenIncomplete? lookahead, ch
-    (ch.upcase? && lookahead.integer?) || (Token.couldbe(lookahead) == Token.couldbe(ch))
-  end
+  
 end

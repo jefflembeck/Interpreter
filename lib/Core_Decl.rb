@@ -1,4 +1,8 @@
 class Core_Decl
+  
+  def initialize
+  end
+  
   idl = Core_Id_List.new
   
   def parse_decl
