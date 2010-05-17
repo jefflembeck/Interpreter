@@ -1,9 +1,10 @@
 require 'lib/Token'
 require 'lib/Extend_String'
+require 'singleton'
 
 # For explanation on methods and class variables, please see the README
 class Tokenizer
-
+include Singleton
   #constructor
   def initialize
     @tokens = []

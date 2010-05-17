@@ -24,4 +24,8 @@ class String
       def whitespace?
         self.match(/\A\s+\Z/) == nil ? false : true
       end
+      
+      def letters?
+        upcase? || downcase?
+      end
 end
