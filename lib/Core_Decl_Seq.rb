@@ -1,0 +1,2 @@
+class Core_Decl_Seq
+end

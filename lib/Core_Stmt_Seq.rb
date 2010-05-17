@@ -1,0 +1,2 @@
+class Core_Stmt_Seq
+end

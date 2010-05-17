@@ -1,0 +1,97 @@
+= Lab1
+
+Created by: Jeffrey Lembeck
+Lab1 is a Tokenizer that takes in an input file written in the Core language and outputs the numerical value for each
+of the tokens used in it.  This README will explain how to use and describe the program, along with its methods.
+
+== Getting started
+
+To get started you need Ruby installed on your system.  STDSUN has ruby version 1.8.4 installed; this should work.
+
+To run, enter the lab1 folder, and type: ruby main.rb COREFILEPATHNAME
+
+Where COREFILEPATHNAME is the path and name of the test file that you would like to feed into the Tokenizer.  Output should appear on the terminal.
+
+
+== Testing
+
+The test suite that accompanies this is listed under tests/* where star is the name of the test.  These tests can be run by typing "ruby main.rb tests/*" (without quotes) where * is the name of the test.  They test several different potential problems that the program could run across, including empty files, files with only 1 letter, and many other problems.
+
+== Corrections
+
+Currently, the Tokenizer will let the user know if it receives an incorrect token, but does not fatally exit at that point.
+
+
+== Lab1 lib
+=== lib::Extend_String
+
+Extend_String is a module that will extend the String class so it recognizes the regular expression that we use in order to define many of our terminal symbols.
+
+==== lib::Token
+
+Token is the token class.  This is made of two major values, the token name and the token value.  The value is a numerical value set forth in our documentation for each of the potential token types.
+
+=== lib::Token::Class variables
+
+KEYWORDS - A list of the Keywords given in the documentation mapped to their associated values
+
+SYMBOLS - A list of the symbols given in the documentation mapped to their associated values
+
+==== lib::Token::Methods
+  
+initialize(name)
+
+- This is a constructor in ruby. This constructor takes in the name fed to it and creates an object of Token class with a value that is fed from the toknum method
+
+name
+
+- Accessor method that returns the name associated with the token
+  
+value
+
+- Accessor method that returns the numerical value associated with the token
+
+toknum (s)
+
+- Gives the numerical value associated with the passed in string, whether it be an identifier, a symbol, a keyword, or an integer
+    
+self.couldbe(s)
+
+- Used while tokenizing in order to guess what type the token being tokenized could be
+  
+type
+
+- Returns the type of the token
+
+self.symbolsplit(s)
+
+- symbolsplit takes a string of symbols and properly splits them, returning
+an array of strings, giving precedent to symbols with two characters over one
+example: "===" turns into ["==", "="]
+
+=== lib::Tokenizer
+
+Tokenizer actually does the job of Tokenizing the file passed to it.  It does this by opening the file, creating an array of Token class, and then closing the file.
+
+=== lib::Tokenizer::Methods
+
+initialize
+
+- Ruby constructor for type Tokenizer
+
+tokens
+
+- The array of tokens created during the tokenization process
+
+tokenize filename
+
+- Opens the file, calls getNextToken until the file is finished and places the tokens in the Token array
+until the file is finished being read
+
+getNextToken file
+
+- returns the next token in the passed file
+
+tokenIncomplete? lookahead, ch
+
+- Compares the lookahead character and the read character to see if the token is finished yet

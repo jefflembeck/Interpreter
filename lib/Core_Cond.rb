@@ -1,0 +1,2 @@
+class Core_Cond
+end
