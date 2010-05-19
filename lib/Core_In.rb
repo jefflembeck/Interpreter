@@ -10,9 +10,10 @@ class Core_In
     @idl  = Core_Id_List.new
     @semi = Tokenizer.instance.get_next_token #burn ;
   end
-  def print_in
+  def print_in t
+    Core_Prog.print_tab(t)
     print "#{@read} "
-    @idl.print_id_list
+    @idl.print_id_list(t)
     puts "#{@semi}"
   end
   def exec_in

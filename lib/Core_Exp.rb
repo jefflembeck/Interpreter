@@ -3,17 +3,25 @@ require 'lib/Core_Fac'
 class Core_Exp
   
   def initialize
+    @fac
+    @plusorminus
+    @exp
     self.parse_exp
   end
   
   def parse_exp
-    f = Core_Fac.new
+    @fac = Core_Fac.new
     if (Tokenizer.instance.lookahead == '+' || Tokenizer.instance.lookahead == '-')
-      Tokenizer.instance.get_next_token
-      e = Core_Exp.new
+      @plusorminus = Tokenizer.instance.get_next_token
+      @exp         = Core_Exp.new
     end
   end
-  def print_exp
+  def print_exp t
+    @fac.print_fac(t)
+    print "#{@plusorminus}"
+    unless @exp.nil?
+      @exp.print_exp(t)
+    end
   end
   def exec_exp
   end

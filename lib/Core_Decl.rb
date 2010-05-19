@@ -15,9 +15,10 @@ class Core_Decl
     @semi = Tokenizer.instance.get_next_token #grabs ;
   end
   
-  def print_decl
+  def print_decl t
+    Core_Prog.print_tab(t)
     print "#{@int} "
-    @idl.print_id_list
+    @idl.print_id_list(t)
     puts "#{@semi}"
   end
   

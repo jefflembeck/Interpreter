@@ -34,16 +34,24 @@ class Core_If
     end
   end
   
-  def print_if
+  def print_if t
+    Core_Prog.print_tab(t)
     print "#{@if }"
-    @c.print_cond
-    print "#{@then} \n"
-    @ss.print_stmt_seq
+    @c.print_cond(t)
+    puts "#{@then}"
+    t += 1
+    @ss.print_stmt_seq(t)
+    t -= 1
+    Core_Prog.print_tab(t)
     print "#{@endelse}"
     if @ss2.nil?
       puts "#{@semi}"
     else
-      @ss2.print_stmt_seq
+      t += 1
+      Core_Prog.print_tab(t)
+      @ss2.print_stmt_seq(t)
+      t -= 1
+      Core_Prog.print_tab(t)
       print "#{@end}"
       puts "#{@semi2}"
     end

@@ -16,9 +16,9 @@ class Core_Decl_Seq
     end
   end
   
-  def print_decl_seq
-    @cd.print_decl
-    @cds.print_decl_seq unless @cds.nil?
+  def print_decl_seq t
+    @cd.print_decl(t)
+    @cds.print_decl_seq(t) unless @cds.nil?
   end
   
   def exec_decl_seq

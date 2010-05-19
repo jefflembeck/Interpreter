@@ -35,17 +35,18 @@ class Core_Stmt
     end
   end
   
-  def print_stmt
+  def print_stmt t
+    Core_Prog.print_tab(t)
     if !@i.nil?
-      @i.print_if
+      @i.print_if(t)
     elsif !@loop.nil?
-      @loop.print_loop
+      @loop.print_loop(t)
     elsif !@in.nil?
-      @in.print_in
+      @in.print_in(t)
     elsif !@out.nil?
-      @out.print_out
+      @out.print_out(t)
     else
-      @a.print_assign
+      @a.print_assign(t)
     end
   end
   

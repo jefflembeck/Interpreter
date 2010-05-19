@@ -14,10 +14,10 @@ class Core_Stmt_Seq
     end
   end
   
-  def print_stmt_seq
-    @cs.print_stmt
+  def print_stmt_seq t
+    @cs.print_stmt(t)
     unless @css.nil?
-      @css.print_stmt_seq
+      @css.print_stmt_seq(t)
     end
   end
   

@@ -18,11 +18,14 @@ class Core_Loop
     @semi  = Tokenizer.instance.get_next_token #get ;
   end
   
-  def print_loop
+  def print_loop t
+    Core_Prog.print_tab(t)
     print "#{@while} "
-    @c.print_cond
+    @c.print_cond(t)
     puts "#{@loop}"
-    @ss.print_stmt_seq
+    t += 1
+    @ss.print_stmt_seq(t)
+    Core_Prog.print_tab(t)
     print "#{@end}"
     puts "#{@semi}"
   end

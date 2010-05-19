@@ -9,7 +9,8 @@ class Core_Comp_Op
     raise InvalidCoreProgram.new("Broken Comp Op - #{@op}") if !@op.comp_symbol?
   end
   
-  def print_comp_op
+  def print_comp_op t
+    print "#{@op}"
   end
   
   def exec_comp_op

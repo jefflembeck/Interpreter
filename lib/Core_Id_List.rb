@@ -17,11 +17,11 @@ class Core_Id_List
     end  
   end
   
-  def print_id_list
-    @id.print_id
+  def print_id_list t
+    @id.print_id(t)
     unless @idl.nil?
       print ", "
-      @idl.print_id_list
+      @idl.print_id_list(t)
     end
   end
   

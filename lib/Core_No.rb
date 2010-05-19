@@ -10,7 +10,8 @@ class Core_No
     raise InvalidCoreProgram.new("Broken Number - #{no}") if !@no.integer?
   end
   
-  def print_no
+  def print_no t
+    print "#{@no}"
   end
   
   def exec_no

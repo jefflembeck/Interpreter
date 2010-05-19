@@ -14,7 +14,7 @@ class Core_Id
     raise InvalidCoreProgram.new("Broken Id - #{@id}") if !@id.identifier?
   end
   
-  def print_id
+  def print_id t
     print "#{@id}"
   end
   

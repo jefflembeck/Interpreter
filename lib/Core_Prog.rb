@@ -27,12 +27,12 @@ class Core_Prog
   end
   
   def print_prog
+    tabcount = 0
     puts "#{@program}"
-    print "\t"
-    @ds.print_decl_seq
+    tabcount += 1
+    @ds.print_decl_seq(tabcount)
     puts "#{@begin}"
-    print "\t"
-    @ss.print_stmt_seq
+    @ss.print_stmt_seq(tabcount)
     puts "#{@end}"
   end
   
@@ -45,5 +45,11 @@ class Core_Prog
   
   def self.id_list
     @@id_list
+  end
+  
+  def self.print_tab t
+    t.times do
+      print "\t"
+    end
   end
 end

@@ -17,7 +17,13 @@ class Core_Assign
     @exp    = Core_Exp.new
     @semi   = Tokenizer.instance.get_next_token #burn ;
   end
-  def print_assign
+  
+  def print_assign t
+    Core_Prog.print_tab(t)
+    @id.print_id(t)
+    print " #{@equals} "
+    @exp.print_exp(t)
+    puts "#{@semi}"
   end
   def exec_assign
   end
