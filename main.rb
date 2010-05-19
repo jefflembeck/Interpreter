@@ -1,15 +1,17 @@
 require 'lib/Tokenizer'
+require 'lib/Core_Prog'
+require 'rubygems'
+require 'ruby-debug'
 
 filename = ARGV[0]
-@tokenizer = Tokenizer.new(filename)
+@tokenizer = Tokenizer.instance
+
+Tokenizer.instance.setup(filename)
 
 begin
-  
-  token = @tokenizer.get_next_token
-  until token.whitespace?
-    puts token
-    token = @tokenizer.get_next_token
-  end
+  p = Core_Prog.new
+  p.print_prog
+  p.exec_prog
 
 rescue Errno::ENOENT
   print "Can't find that filename, sorry.  Try again: "

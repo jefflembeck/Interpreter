@@ -1,14 +1,24 @@
+require 'lib/Core_Stmt'
+
 class Core_Stmt_Seq
   def initialize
-    s = Core_Stmt.new
-    @ss =[]
+    @cs
+    @css
+    self.parse_stmt_seq
   end
   
   def parse_stmt_seq
-    s.parse_stmt
+    @cs = Core_Stmt.new
+    if Tokenizer.instance.lookahead.statement_starter?
+      @css = Core_Stmt_Seq.new
+    end
   end
   
   def print_stmt_seq
+    @cs.print_stmt
+    unless @css.nil?
+      @css.print_stmt_seq
+    end
   end
   
   def exec_stmt_seq

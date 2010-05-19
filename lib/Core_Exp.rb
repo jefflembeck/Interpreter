@@ -1,15 +1,16 @@
+require 'lib/Core_Fac'
+
 class Core_Exp
   
   def initialize
+    self.parse_exp
   end
   
   def parse_exp
     f = Core_Fac.new
-    f.parse_fac
-    if @tokenizer.current_token == '+' || @tokenizer.current_token == '-'
-      @tokenizer.get_next_token
+    if (Tokenizer.instance.lookahead == '+' || Tokenizer.instance.lookahead == '-')
+      Tokenizer.instance.get_next_token
       e = Core_Exp.new
-      e.parse_exp
     end
   end
   def print_exp

@@ -1,15 +1,21 @@
+require 'lib/Core_Id'
+require 'lib/Core_Exp'
+
 class Core_Assign
   
   def initialize
+    @id
+    @equals
+    @exp
+    @semi
+    self.parse_assign
   end
   
   def parse_assign
-    i = Core_Id.new
-    i.parse_id
-    @tokenizer.get_next_token
-    e = Core_Exp.new
-    e.parse_exp
-    @tokenizer.get_next_token
+    @id     = Core_Id.new
+    @equals = Tokenizer.instance.get_next_token #burn =
+    @exp    = Core_Exp.new
+    @semi   = Tokenizer.instance.get_next_token #burn ;
   end
   def print_assign
   end

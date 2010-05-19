@@ -1,19 +1,24 @@
-require 'Tokenizer.rb'
+require 'lib/Tokenizer'
+require 'lib/Core_Decl'
 
 class Core_Decl_Seq
   
   def initialize
+    @cd
+    @cds
+    self.parse_decl_seq    
   end
   
-  
-  decl = Core_Decl.new
-  
   def parse_decl_seq
-    decl.parse_decl
-    
+    @cd = Core_Decl.new
+    if Tokenizer.instance.lookahead == 'int'
+      @cds = Core_Decl_Seq.new
+    end
   end
   
   def print_decl_seq
+    @cd.print_decl
+    @cds.print_decl_seq unless @cds.nil?
   end
   
   def exec_decl_seq

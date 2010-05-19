@@ -1,40 +1,59 @@
-require 'lib/Extend_String.rb'
+require 'lib/Extend_String'
+require 'singleton'
+require 'rubygems'
+require 'ruby-debug'
 
 class Tokenizer
+  include Singleton
   
-  attr_accessor :source, :chunks, :current_token
-  
-
+  attr_accessor :source, :blocks
              
-  def initialize(filename = '')
-    @source = IO.readlines(filename, '') unless filename.empty?
-    @chunks = self.source.to_s.split(' ') unless filename.empty?
+  def initialize
+  end
+  
+  def setup filename
+     @source = IO.readlines(filename, '') unless filename.empty?
+     @blocks = source.to_s.split(' ') unless filename.empty?
   end
 
+  def id_list
+    @@id_list
+  end
+  
   def get_next_token
-    if valid_token?(self.chunks.first)
-      self.chunks.shift
-    elsif self.chunks.first =~ /end/
-      self.chunks.first.slice!(0..2)
+    if valid_token?(self.blocks.first)
+      self.blocks.shift
+    elsif self.blocks.first =~ /end/
+      self.blocks.first.slice!(0..2)
     else
-      get_token_from_chunk
+      get_token_from_block
     end
   end
   
-  def get_token_from_chunk
-    tokens = split_em(self.chunks.shift).reverse.each do |token|
-      self.chunks.unshift(token) 
+  def lookahead
+    t = get_next_token
+    unget_token(t)
+    t
+  end
+  
+  def unget_token t
+    self.blocks.unshift(t)
+  end
+  
+  def get_token_from_block
+    tokens = block_buster(self.blocks.shift).reverse.each do |token|
+      self.blocks.unshift(token) 
     end
-    self.chunks.shift
+    self.blocks.shift
   end
   
-  def valid_token?(chunk)
-    chunk.whitespace? || chunk.integer? || chunk.identifier? || chunk.symbol? || chunk.keyword?
+  def valid_token? t
+    t.whitespace? || t.integer? || t.identifier? || t.symbol? || t.keyword?
   end
   
-  def split_em(chunk)
+  def block_buster block
     count = 0
-    foo = chunk.split(//).inject([""]) do |arr,e|
+    foo = block.split(//).inject([""]) do |arr,e|
       if self.valid_token?(arr[count] + e)
         arr[count] = arr[count] + e
         arr
@@ -44,6 +63,5 @@ class Tokenizer
       end
     end
   end
-
   
 end

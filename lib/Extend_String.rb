@@ -29,6 +29,10 @@ class String
       def symbol?
         [';',',','=', '!', '[', ']', '&', '|', '(', ')', '+', '-', '*', '<', '>'].include?(self)
       end
+      
+      def comp_symbol?
+        ['=', '!=', '==', '<', '>', '<=', '>='].include?(self)
+      end
 
       def whitespace?
         self.match(/\A\s+\Z/) == nil ? false : true
@@ -36,6 +40,10 @@ class String
       
       def letters?
         upcase? || downcase?
+      end
+      
+      def statement_starter?
+        self.match(/\A(if|while|read|write|[A-Z]+\d*)\Z/) == nil ? false : true
       end
       
       def keyword?

@@ -1,17 +1,17 @@
+require 'lib/Core_Comp_Op'
+
 class Core_Comp
   
   def initialize
-  end
+    self.parse_comp
+  end 
   
   def parse_comp
-    @tokenizer.get_next_token
+    Tokenizer.instance.get_next_token #get (
     op = Core_Op.new
-    op.parse_op
     compop = Core_Comp_Op.new
-    compop.parse_comp_op
     op2 = Core_Op.new
-    op2.parse_op
-    @tokenizer.get_next_token
+    Tokenizer.instance.get_next_token #burn )
   end
   def print_comp
   end

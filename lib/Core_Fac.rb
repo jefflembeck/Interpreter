@@ -1,15 +1,16 @@
+require 'lib/Core_Op'
+
 class Core_Fac
   
   def initialize
+    self.parse_fac
   end
   
   def parse_fac
     op = Core_Op.new
-    op.parse_op
-    if @tokenizer.current_token == '*'
-      @tokenizer.get_next_token
+    if Tokenizer.instance.lookahead == '*'
+      Tokenizer.instance.get_next_token # burn *
       f = Core_Fac.new
-      f.parse_face
     end
   end
   def print_fac
