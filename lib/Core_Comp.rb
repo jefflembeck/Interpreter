@@ -30,5 +30,6 @@ class Core_Comp
   end
   
   def exec_comp
+    @op.exec_op
   end
 end

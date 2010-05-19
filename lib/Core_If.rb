@@ -59,6 +59,11 @@ class Core_If
   end
   
   def exec_if
+    if (@c.exec_cond)
+      @ss.exec_stmt_seq
+    else
+      @ss2.exec_stmt_seq unless @ss2.nil?
+    end
   end
   
 end

@@ -20,5 +20,6 @@ class Core_Out
   end
   
   def exec_out
+    print @idl.exec_id_list
   end
 end

@@ -26,5 +26,6 @@ class Core_Assign
     puts "#{@semi}"
   end
   def exec_assign
+    Core_Prog.id_list[@id] = @exp.exec_exp
   end
 end

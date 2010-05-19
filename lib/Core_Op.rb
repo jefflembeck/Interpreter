@@ -41,5 +41,12 @@ class Core_Op
   end
   
   def exec_op
+    if !@no.nil?
+      @no.exec_no
+    elsif !@id.nil?
+      @id.exec_id
+    else
+      @exp.exec_exp
+    end
   end
 end

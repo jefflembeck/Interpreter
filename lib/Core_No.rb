@@ -15,6 +15,7 @@ class Core_No
   end
   
   def exec_no
+    @no
   end
 
 end

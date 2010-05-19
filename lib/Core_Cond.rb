@@ -11,6 +11,7 @@ class Core_Cond
     @andor
     @cnd2
     @rb
+    @return_value = false
     @tok = Tokenizer.instance.lookahead
     self.parse_cond
   end
@@ -50,5 +51,17 @@ class Core_Cond
   end
   
   def exec_cond
+    case @tok
+    when '('
+      @cmp.exec_comp
+    when '!'
+      !@negcnd.exec_cond
+    else
+      if @andor == '&&'
+        @cnd.exec_cond && @cnd2.exec_cond
+      else
+        @cnd.exec_cond || @cnd2.exec_cond
+      end
+    end
   end
 end

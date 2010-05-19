@@ -6,6 +6,7 @@ class Core_Fac
     @op
     @mul
     @fac
+    @returnval
     self.parse_fac
   end
   
@@ -24,5 +25,11 @@ class Core_Fac
     end
   end
   def exec_fac
+    if !@fac.nil?
+      @returnval = @op.exec_op*@fac.exec_fac 
+    else
+      @returnval = @op.exec_op
+    end
+    @returnval
   end
 end

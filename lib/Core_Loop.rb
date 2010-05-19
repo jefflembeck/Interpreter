@@ -31,5 +31,8 @@ class Core_Loop
   end
   
   def exec_loop
+    while (@c.exec_cond) do
+      @ss.exec_stmt_seq
+    end
   end
 end

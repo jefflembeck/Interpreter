@@ -19,5 +19,6 @@ class Core_Id
   end
   
   def exec_id
+    Core_Prog.id_list[@id]
   end
 end

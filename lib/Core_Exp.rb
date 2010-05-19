@@ -6,6 +6,7 @@ class Core_Exp
     @fac
     @plusorminus
     @exp
+    @value
     self.parse_exp
   end
   
@@ -18,11 +19,21 @@ class Core_Exp
   end
   def print_exp t
     @fac.print_fac(t)
-    print "#{@plusorminus}"
     unless @exp.nil?
+      print " #{@plusorminus} "
       @exp.print_exp(t)
     end
   end
   def exec_exp
+    if !@exp.nil?
+      if @plusorminus == "+"
+        @value = @fac.exec_fac + @exp.exec_exp
+      else
+        @value = @fac.exec_fac - @exp.exec_exp
+      end
+    else
+      @value = @fac.exec_fac
+    end
+    @value
   end
 end

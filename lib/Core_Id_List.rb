@@ -26,6 +26,10 @@ class Core_Id_List
   end
   
   def exec_id_list
+    @id.exec_id
+    unless @idl.nil?
+      @idl.exec_id_list
+    end
   end
   
 end

@@ -37,6 +37,8 @@ class Core_Prog
   end
   
   def exec_prog
+    @ds.exec_decl_seq
+    @ss.exec_stmt_seq
   end
   
   def self.ok_to_add?
