@@ -1,7 +1,5 @@
 require 'lib/Extend_String'
 require 'singleton'
-require 'rubygems'
-require 'ruby-debug'
 
 class Tokenizer
   include Singleton
@@ -14,10 +12,6 @@ class Tokenizer
   def setup filename
      @source = IO.readlines(filename, '') unless filename.empty?
      @blocks = source.to_s.split(' ') unless filename.empty?
-  end
-
-  def id_list
-    @@id_list
   end
   
   def get_next_token

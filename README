@@ -1,17 +1,18 @@
-= Lab1
+=Interpreter
 
 Created by: Jeffrey Lembeck
-Lab1 is a Tokenizer that takes in an input file written in the Core language and outputs the numerical value for each
-of the tokens used in it.  This README will explain how to use and describe the program, along with its methods.
+Interpreter is an interpreter for the Core language written in Ruby.  It recursively parses a program written in the Core language, then performs a pretty print, then it executes the file. This README will explain how to use and describe the program, along with its methods.
 
 == Getting started
 
-To get started you need Ruby installed on your system.  STDSUN has ruby version 1.8.4 installed; this should work.
+To get started you need Ruby installed on your system.  Ohio State University's STDSUN server has ruby version 1.8.4 installed; this should work.
 
-To run, enter the lab1 folder, and type: ruby main.rb COREFILEPATHNAME
+To run, enter the lab2 folder, and type: ruby main.rb COREFILEPATHNAME
 
 Where COREFILEPATHNAME is the path and name of the test file that you would like to feed into the Tokenizer.  Output should appear on the terminal.
 
+Any input that you would like to use for your program's <in> calls need to be loaded in readfile.txt.  All output
+will be pushed into writefile.txt
 
 == Testing
 
@@ -19,79 +20,160 @@ The test suite that accompanies this is listed under tests/* where star is the n
 
 == Corrections
 
-Currently, the Tokenizer will let the user know if it receives an incorrect token, but does not fatally exit at that point.
+Currently, the Interpreter should let you know when you've passed it an erroneous program.
 
 
-== Lab1 lib
+== Lab2 lib
 === lib::Extend_String
 
 Extend_String is a module that will extend the String class so it recognizes the regular expression that we use in order to define many of our terminal symbols.
 
-==== lib::Token
-
-Token is the token class.  This is made of two major values, the token name and the token value.  The value is a numerical value set forth in our documentation for each of the potential token types.
-
-=== lib::Token::Class variables
-
-KEYWORDS - A list of the Keywords given in the documentation mapped to their associated values
-
-SYMBOLS - A list of the symbols given in the documentation mapped to their associated values
-
-==== lib::Token::Methods
-  
-initialize(name)
-
-- This is a constructor in ruby. This constructor takes in the name fed to it and creates an object of Token class with a value that is fed from the toknum method
-
-name
-
-- Accessor method that returns the name associated with the token
-  
-value
-
-- Accessor method that returns the numerical value associated with the token
-
-toknum (s)
-
-- Gives the numerical value associated with the passed in string, whether it be an identifier, a symbol, a keyword, or an integer
-    
-self.couldbe(s)
-
-- Used while tokenizing in order to guess what type the token being tokenized could be
-  
-type
-
-- Returns the type of the token
-
-self.symbolsplit(s)
-
-- symbolsplit takes a string of symbols and properly splits them, returning
-an array of strings, giving precedent to symbols with two characters over one
-example: "===" turns into ["==", "="]
 
 === lib::Tokenizer
 
-Tokenizer actually does the job of Tokenizing the file passed to it.  It does this by opening the file, creating an array of Token class, and then closing the file.
+Tokenizer is a singleton used mainly for its get_next_token method, which grabs the next token written in the program
 
 === lib::Tokenizer::Methods
 
 initialize
+	standard Ruby constructor
+  
+setup
+	opens the program file and breaks it into an array by whitespace
 
-- Ruby constructor for type Tokenizer
+get_next_token
+	grabs the next token in the program
+	
+lookahead
+	checks to see what the next token to be grabbed would be without fully committing to it
+	
+unget_token
+    used by lookahead in order to push a token back into the array of tokens that need to be grabbed
 
-tokens
+get_token_from_block
+  	if there is a mass of tokens together in one block of the array, this uses block_buster to grab the next proper one out
 
-- The array of tokens created during the tokenization process
+valid_token?
+  	checks to make sure that the token grabbed is valid
 
-tokenize filename
+block_buster
+	splits a mass of tokens that are blocked together up into an array of nice and useable tokens
 
-- Opens the file, calls getNextToken until the file is finished and places the tokens in the Token array
-until the file is finished being read
+=== error::InvalidCoreProgram
+Used to raise errors throughout the program when the interpreter receives an incorrect program.
 
-getNextToken file
+=== lib::Classes
+The following classes were used in order to approach this project in an OO manner.  Descriptions are given in BNF.
+Each have a method for Initialize, Parse, Print, and Exec.
 
-- returns the next token in the passed file
+Initialize is the standard Ruby constructor.
 
-tokenIncomplete? lookahead, ch
+Parse uses recursive descent to read through the program and to create a parsing tree out of it.
 
-- Compares the lookahead character and the read character to see if the token is finished yet
+Print outputs the object in a styled format.
+
+Exec executes the object, allowing the entire program to be executed along the way.
+
+All other special methods will be listed below.
+
+=== lib::Core_Assign
+<assign> ::=<id> = <exp>;
+
+
+=== lib::Core_Comp
+<comp> ::= (<op> <comp op> <op>)
+
+
+=== lib::Core_Comp_Op
+<comp op> ::= != | == | < | > | <= | >=
+
+
+=== lib::Core_Cond
+<cond> ::=<comp>|!<cond>| [<cond> && <cond>] | [<cond> or <cond>]
+
+
+=== lib::Core_Decl
+<decl> ::= int <id list>;
+
+=== lib::Core_Decl_Seq
+<decl seq> ::= <decl> | <decl> <decl seq>
+
+=== lib::Core_Exp
+<exp>	::= <fac>|<fac>+<exp>|<fac>-<exp>
+
+=== lib::Core_Fac
+<fac>	::= <op> | <op> * <fac>
+
+=== lib::Core_Id
+<id>	::= <let> | <let><id> | <let><no>
+
+=== lib::Core_Id::Methods
+
+key
+	returns the String value of the Identifier, instead of the object itself.
+
+=== lib::Core_Id_List
+<id list> ::= <id> | <id>, <id list>
+
+=== lib::Core_Id_List::Methods
+
+first
+	grabs the first Id from an Id list
+rest
+	if it exists, grabs all but the first Id from an Id List
+
+=== lib::Core_If
+<if> ::= if <cond> then <stmt seq> end;
+|if <cond> then <stmt seq> else <stmt seq> end;
+
+=== lib::Core_In
+<in> ::= read <id list>;
+
+=== lib::Core_In::Methods
+
+arrayify_id_list
+	turns the id list being read into an array of ids, in order to more easily deal with them
+	
+=== lib::Core_Loop
+<loop>	::= while <cond> loop <stmt seq> end; 
+
+=== lib::Core_No
+<no>	::= <digit> | <digit><no>
+
+=== lib::Core_Op
+<op>	::= <no> | <id> | (<exp>)
+
+=== lib::Core_Out
+<out>::= write <id list>;
+
+=== lib::Core_In::Methods
+
+arrayify_id_list
+	turns the id list being written to into an array of ids, in order to more easily deal with them
+	
+=== lib::Core_Prog
+<prog> ::= program <decl seq> begin <stmt seq> end
+
+=== lib::Core_Prog::Methods
+
+self.ok_to_add?
+	returns true if the program is still in the stage where it is ok to declare new identifiers (inside a decl_seq)
+
+self.id_list
+	returns a hash of all of the identifiers and the values associated with them
+
+self.readval
+	an array of numbers made out of the readfile.txt that the user fills with values they would like read in
+
+self.write_file
+	the file being written to (writefile.txt)
+
+self.print_tab
+	used for printing in order to more properly space things
+
+=== lib::Core_Stmt
+<stmt> ::= <assign>|<if>|<loop>|<in>|<out>
+
+=== lib::Core_Stmt_Seq
+<stmt seq> ::= <stmt> | <stmt> <stmt seq>
+

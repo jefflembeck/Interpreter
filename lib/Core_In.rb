@@ -24,6 +24,7 @@ class Core_In
       val = Core_Prog.readval.shift
       Core_Prog.id_list[@arrlist[i]] = val
     end
+    @arrlist = []
   end
   
   def arrayify_id_list list

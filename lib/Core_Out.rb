@@ -23,10 +23,14 @@ class Core_Out
   def exec_out
     il = @idl
     arrayify_id_list(il) 
-    f = File.open("writefile.txt", "w")
     @arrlist.size.times do |n|
-      f.write("#{@arrlist[n]} #{Core_Prog.id_list[@arrlist[n]]} \n")
+      if !Core_Prog.id_list[@arrlist[n]].nil?
+        Core_Prog.write_file.write("#{@arrlist[n]} #{Core_Prog.id_list[@arrlist[n]]} \n")
+      else
+        raise InvalidCoreProgram.new("Trying to write to something that isn't there")
+      end
     end
+    @arrlist = []
   end
   
   def arrayify_id_list list

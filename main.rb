@@ -1,7 +1,5 @@
 require 'lib/Tokenizer'
 require 'lib/Core_Prog'
-require 'rubygems'
-require 'ruby-debug'
 
 filename = ARGV[0]
 

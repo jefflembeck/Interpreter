@@ -7,6 +7,7 @@ class Core_Prog
   def initialize
     @readsource = IO.readlines("readfile.txt", 'r')
     @@readvalues = @readsource.to_s.split(' ')
+    @@writefile = File.open("writefile.txt", "w")
     @program
     @begin
     @end
@@ -55,6 +56,10 @@ class Core_Prog
   
   def self.readval
     @@readvalues
+  end
+  
+  def self.write_file
+    @@writefile
   end
   
   def self.print_tab t
