@@ -14,6 +14,7 @@ class Core_Comp_Op
   end
   
   def exec_comp_op
+    @op
   end
   
 end

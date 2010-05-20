@@ -36,7 +36,6 @@ class Core_Stmt
   end
   
   def print_stmt t
-    Core_Prog.print_tab(t)
     if !@i.nil?
       @i.print_if(t)
     elsif !@loop.nil?
@@ -51,5 +50,16 @@ class Core_Stmt
   end
   
   def exec_stmt
+    if !@i.nil?
+      @i.exec_if
+    elsif !@loop.nil?
+      @loop.exec_loop
+    elsif !@in.nil?
+      @in.exec_in
+    elsif !@out.nil?
+      @out.exec_out
+    else
+      @a.exec_assign
+    end
   end
 end

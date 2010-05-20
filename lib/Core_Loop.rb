@@ -25,6 +25,7 @@ class Core_Loop
     puts "#{@loop}"
     t += 1
     @ss.print_stmt_seq(t)
+    t -= 1
     Core_Prog.print_tab(t)
     print "#{@end}"
     puts "#{@semi}"

@@ -3,6 +3,7 @@ class Core_Out
     @write
     @idl
     @semi
+    @arrlist = []
     self.parse_out
   end
   
@@ -20,6 +21,18 @@ class Core_Out
   end
   
   def exec_out
-    print @idl.exec_id_list
+    il = @idl
+    arrayify_id_list(il) 
+    f = File.open("writefile.txt", "w")
+    @arrlist.size.times do |n|
+      f.write("#{@arrlist[n]} #{Core_Prog.id_list[@arrlist[n]]} \n")
+    end
+  end
+  
+  def arrayify_id_list list
+    unless list.first.nil?
+      @arrlist << list.first
+      arrayify_id_list(list.rest) unless list.rest.nil?
+    end
   end
 end

@@ -1,8 +1,8 @@
-program int X1, X4; int X2, X3, X7;
+program int X1, X4, X5; int X2, X3, X7;
 
  
 
-          begin X1=0; X2=1; X3=1; read X4;
+          begin X1=0; X2=1; X3=1; read X4, X5;
 
  
 
@@ -22,7 +22,7 @@ program int X1, X4; int X2, X3, X7;
 
  
 
-               write X2;
+               write X2, X5, X1, X3, X4, X6, X7;
 
  
 

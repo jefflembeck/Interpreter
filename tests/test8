@@ -1,5 +1,5 @@
 program
-int X=8;
+int X;
 begin
-X===Y;
+X=Y;
 end

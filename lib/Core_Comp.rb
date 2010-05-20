@@ -30,6 +30,10 @@ class Core_Comp
   end
   
   def exec_comp
-    @op.exec_op
+    begin
+      result = @op.exec_op.send(@compop.exec_comp_op, @op2.exec_op)
+    rescue NoMethodError  #ridiculous hack, wish that they would give us a relatively newer version of Ruby
+      result = !@op.exec_op.send("==", @op2.exec_op)
+    end
   end
 end

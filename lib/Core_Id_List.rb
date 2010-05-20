@@ -2,9 +2,13 @@ require 'lib/Core_Id'
 
 class Core_Id_List
   
+  attr_accessor :first, :rest
+  
   def initialize
     @id
     @idl
+    @first
+    @rest
     self.parse_id_list
   end
   
@@ -30,6 +34,14 @@ class Core_Id_List
     unless @idl.nil?
       @idl.exec_id_list
     end
+  end
+  
+  def first
+    @id.key
+  end
+  
+  def rest
+    @idl
   end
   
 end

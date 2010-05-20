@@ -5,6 +5,8 @@ require 'lib/Tokenizer'
 
 class Core_Prog
   def initialize
+    @readsource = IO.readlines("readfile.txt", 'r')
+    @@readvalues = @readsource.to_s.split(' ')
     @program
     @begin
     @end
@@ -31,7 +33,9 @@ class Core_Prog
     puts "#{@program}"
     tabcount += 1
     @ds.print_decl_seq(tabcount)
+    Core_Prog.print_tab(tabcount)
     puts "#{@begin}"
+    tabcount += 1
     @ss.print_stmt_seq(tabcount)
     puts "#{@end}"
   end
@@ -49,9 +53,13 @@ class Core_Prog
     @@id_list
   end
   
+  def self.readval
+    @@readvalues
+  end
+  
   def self.print_tab t
     t.times do
-      print "\t"
+      print "  "
     end
   end
 end

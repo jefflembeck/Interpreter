@@ -22,5 +22,9 @@ class Core_Stmt_Seq
   end
   
   def exec_stmt_seq
+    @cs.exec_stmt
+    unless @css.nil?
+      @css.exec_stmt_seq
+    end
   end
 end

@@ -3,6 +3,7 @@ class Core_In
     @read
     @semi
     @idl
+    @arrlist = []
     self.parse_in
   end
   def parse_in
@@ -17,5 +18,18 @@ class Core_In
     puts "#{@semi}"
   end
   def exec_in
+    il = @idl
+    arrayify_id_list(il)
+    @arrlist.size.times do |i|
+      val = Core_Prog.readval.shift
+      Core_Prog.id_list[@arrlist[i]] = val
+    end
+  end
+  
+  def arrayify_id_list list
+    unless list.first.nil?
+      @arrlist << list.first
+      arrayify_id_list(list.rest) unless list.rest.nil?
+    end
   end
 end
