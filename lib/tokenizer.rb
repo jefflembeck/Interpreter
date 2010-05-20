@@ -12,6 +12,9 @@ class Tokenizer
   def setup filename
      @source = IO.readlines(filename, '') unless filename.empty?
      @blocks = source.to_s.split(' ') unless filename.empty?
+     if @blocks.empty?
+       raise InvalidCoreProgram.new("Can\'t have an empty file!")
+     end
   end
   
   def get_next_token

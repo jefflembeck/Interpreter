@@ -27,5 +27,8 @@ class Core_Assign
   end
   def exec_assign
     Core_Prog.id_list[@id.key] = @exp.exec_exp
+    if @exp.exec_exp.nil?
+      raise InvalidCoreProgram.new("Uninitialized variable!")
+    end
   end
 end

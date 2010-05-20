@@ -17,14 +17,14 @@ class Core_Op
     @t = Tokenizer.instance.lookahead
     if @t.integer?
       @no = Core_No.new
-    elsif @t.identifier?
+    elsif @t.identifier? && Core_Prog.id_list.include?(@t)
       @id = Core_Id.new
     elsif @t == '('
       @lp  = Tokenizer.instance.get_next_token #burn (
       @exp = Core_Exp.new
       @rp  = Tokenizer.instance.get_next_token #burn )
     else
-      raise InvalidCoreProgram.new("Broken Op - #{@t}")
+      raise InvalidCoreProgram.new("Broken Op - #{@t}, probably uninitialized")
     end
   end
   
@@ -46,6 +46,9 @@ class Core_Op
     elsif !@id.nil?
       @id.exec_id
     else
+      if @exp.exec_exp.nil?
+        raise InvalidCoreProgram.new("Uninitialized variable")
+      end
       @exp.exec_exp
     end
   end

@@ -27,7 +27,7 @@ class Core_Out
       if !Core_Prog.id_list[@arrlist[n]].nil?
         Core_Prog.write_file.write("#{@arrlist[n]} #{Core_Prog.id_list[@arrlist[n]]} \n")
       else
-        raise InvalidCoreProgram.new("Trying to write to something that isn't there")
+        raise InvalidCoreProgram.new("Trying to write to something that isn't there: #{@arrlist[n]}")
       end
     end
     @arrlist = []
